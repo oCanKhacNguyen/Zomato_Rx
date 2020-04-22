@@ -1,0 +1,27 @@
+//
+//  MainNavigator.swift
+//  mvvm-architect
+//
+//  Created by Nguyen Duc Huy on 4/21/20.
+//  Copyright © 2020 sun. All rights reserved.
+//
+
+protocol MainNavigatable {
+    func navigateToDetailScreen(with resId: String, api: RestaurantsRepositoryImpl)
+}
+
+final class MainNavigator: MainNavigatable {
+    private let navigationController: UINavigationController
+
+    init(_ navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
+
+    func navigateToDetailScreen(with resId: String, api: RestaurantsRepositoryImpl) {
+        let restaurantDetailVM = DetailViewModel(dependencies: DetailViewModel.Dependencies(id: resId,
+                                                                                            api: api))
+        let vc = UIStoryboard.main.detailViewController
+        vc.viewModel = restaurantDetailVM
+        navigationController.pushViewController(vc, animated: true)
+    }
+}
