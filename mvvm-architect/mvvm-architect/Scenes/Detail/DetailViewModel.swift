@@ -12,7 +12,9 @@ final class DetailViewModel: ViewModelType {
     }
 
     struct Output {
+        let loading: Driver<Bool>
         let data: Driver<RestaurantDetail?>
+        let error: Driver<Error>
     }
 
     struct Dependencies {
@@ -27,16 +29,24 @@ final class DetailViewModel: ViewModelType {
     }
 
     func transform(input: DetailViewModel.Input) -> DetailViewModel.Output {
+        let activityIndicator = ActivityIndicator()
+        let loading = activityIndicator.asDriver()
+        let errorTracker = ErrorTracker()
+
         let data = input.ready
             .asObservable()
-            .flatMap { _ in
+            .flatMapLatest { _ in
                 self.dependencies.api.fetchRestaurantDetail(resId: self.dependencies.id)
+                    .trackActivity(activityIndicator)
+                    .trackError(errorTracker)
             }
             .map { restaurant -> RestaurantDetail? in
                 restaurant
             }
-            .asDriver(onErrorJustReturn: nil)
+            .asDriverOnErrorJustComplete()
 
-        return Output(data: data)
+        let errors = errorTracker.asDriver()
+
+        return Output(loading: loading, data: data, error: errors)
     }
 }

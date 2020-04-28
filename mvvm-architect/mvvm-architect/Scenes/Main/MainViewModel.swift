@@ -14,7 +14,7 @@ final class MainViewModel: ViewModelType {
 
     struct Output {
         let loading: Driver<Bool>
-        let results: Driver<[Restaurants]?>
+        let results: Driver<ListRestaurants?>
         let selected: Driver<Void>
         let error: Driver<Error>
     }
@@ -42,23 +42,23 @@ final class MainViewModel: ViewModelType {
                     .trackActivity(activityIndicator)
                     .trackError(errorTracker)
             }
-            .map { restaurants -> [Restaurants]? in
-                restaurants
+            .map { listRestaurants -> ListRestaurants? in
+                listRestaurants
             }
-            .asDriver(onErrorJustReturn: nil)
+            .asDriverOnErrorJustComplete()
 
         let errors = errorTracker.asDriver()
 
         let selected = input.selected
             .asObservable()
             .withLatestFrom(results) { ($0, $1) }
-            .do(onNext: { [weak self] (index: Int, restaurants: [Restaurants]?) in
+            .do(onNext: { [weak self] (index: Int, listRestaurants: ListRestaurants?) in
                 guard let self = self,
-                    let resId = restaurants?[index].restaurant?.id else { return }
+                    let resId = listRestaurants?.restaurants?[index].restaurant?.id else { return }
                 self.dependencies.navigator.navigateToDetailScreen(with: resId, api: self.dependencies.api)
             })
-            .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
 
         return Output(loading: loading, results: results, selected: selected, error: errors)
     }

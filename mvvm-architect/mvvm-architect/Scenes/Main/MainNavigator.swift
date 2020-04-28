@@ -20,7 +20,7 @@ final class MainNavigator: MainNavigatable {
     func navigateToDetailScreen(with resId: String, api: RestaurantsRepositoryImpl) {
         let restaurantDetailVM = DetailViewModel(dependencies: DetailViewModel.Dependencies(id: resId,
                                                                                             api: api))
-        let vc = UIStoryboard.main.detailViewController
+        guard let vc = R.storyboard.main.detailViewController() else { return }
         vc.viewModel = restaurantDetailVM
         navigationController.pushViewController(vc, animated: true)
     }

@@ -49,9 +49,9 @@ final class MainViewController: UIViewController {
             .disposed(by: disposeBag)
 
         output.results
-            .drive(onNext: { [weak self] restaurants in
+            .drive(onNext: { [weak self] listRestaurants in
                 guard let self = self else { return }
-                self.restaurants = restaurants
+                self.restaurants = listRestaurants?.restaurants
                 self.restaurantsTableView.reloadData()
             })
             .disposed(by: disposeBag)
@@ -98,10 +98,4 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndexSubject.onNext(indexPath.item)
     }
-}
-
-// MARK: StoryboardSceneBased
-
-extension MainViewController: StoryboardSceneBased {
-    static var sceneStoryboard = UIStoryboard.main
 }

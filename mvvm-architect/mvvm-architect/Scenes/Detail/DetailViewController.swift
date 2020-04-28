@@ -14,13 +14,17 @@ final class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Address"
+        title = "Address"
         bindViewModel()
     }
 
     private func bindViewModel() {
         let input = DetailViewModel.Input(ready: rx.viewWillAppear.asDriver())
         let output = viewModel.transform(input: input)
+
+        output.loading
+            .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
+            .disposed(by: disposeBag)
 
         output.data
             .drive(onNext: { [weak self] data in
@@ -29,11 +33,13 @@ final class DetailViewController: UIViewController {
                 self.addressLabel.text = address
             })
             .disposed(by: disposeBag)
+
+        output.error
+            .drive(onNext: { [weak self] error in
+                guard let self = self,
+                    let error = error as? BaseError else { return }
+                self.showAlert(message: error.errorMessage ?? "")
+            })
+            .disposed(by: disposeBag)
     }
-}
-
-// MARK: StoryboardSceneBased
-
-extension DetailViewController: StoryboardSceneBased {
-    static var sceneStoryboard = UIStoryboard.main
 }

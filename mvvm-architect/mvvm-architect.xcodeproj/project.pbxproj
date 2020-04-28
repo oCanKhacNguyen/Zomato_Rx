@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01C95935328048F933665A2E /* Pods_mvvm_architect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07383364F9ED6A16C15D377A /* Pods_mvvm_architect.framework */; };
-		04096FB0244DE55C003E167F /* UIStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04096FAF244DE55C003E167F /* UIStoryboard+Extensions.swift */; };
 		04096FB2244DEDA9003E167F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04096FB1244DEDA9003E167F /* MainViewModel.swift */; };
 		04096FB4244DEDD5003E167F /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04096FB3244DEDD5003E167F /* ViewModelType.swift */; };
 		04096FB6244DF1A5003E167F /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04096FB5244DF1A5003E167F /* ActivityIndicator.swift */; };
@@ -60,7 +59,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		04096FAF244DE55C003E167F /* UIStoryboard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extensions.swift"; sourceTree = "<group>"; };
 		04096FB1244DEDA9003E167F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		04096FB3244DEDD5003E167F /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		04096FB5244DF1A5003E167F /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
@@ -303,7 +301,6 @@
 		04CEA6C32446D4BD00F10935 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				04096FAF244DE55C003E167F /* UIStoryboard+Extensions.swift */,
 				04E72C5E244ED5ED00F64558 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
@@ -630,7 +627,6 @@
 				04096FB6244DF1A5003E167F /* ActivityIndicator.swift in Sources */,
 				04955BD7244C9D260009FD2E /* APIUrls.swift in Sources */,
 				04955BD5244C9AF90009FD2E /* CustomRequestAdapter.swift in Sources */,
-				04096FB0244DE55C003E167F /* UIStoryboard+Extensions.swift in Sources */,
 				045905BF244FDECA007B64DA /* ListRestaurants.swift in Sources */,
 				04955BD1244C983C0009FD2E /* BaseError.swift in Sources */,
 				04E72C5D244ECCAB00F64558 /* UIViewController+Rx.swift in Sources */,

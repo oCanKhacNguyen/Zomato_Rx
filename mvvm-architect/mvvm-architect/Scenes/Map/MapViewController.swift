@@ -31,9 +31,3 @@ final class MapViewController: UIViewController {
         marker.map = mapView
     }
 }
-
-// MARK: StoryboardSceneBased
-
-extension MapViewController: StoryboardSceneBased {
-    static var sceneStoryboard = UIStoryboard.map
-}

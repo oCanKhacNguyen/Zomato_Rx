@@ -20,36 +20,43 @@ final class APIService {
         alamoFireManager = Session(configuration: configuration, interceptor: CustomRequestAdapter())
     }
 
-    func request<T: Decodable>(input: BaseRequest, completion: @escaping (_ value: T?, _ error: BaseError?) -> Void) -> DataRequest {
-        return alamoFireManager.request(input.url,
-                                        method: input.requestType,
-                                        parameters: input.parameters,
-                                        encoding: input.encoding)
-            .validate(statusCode: 200 ..< 512)
-            .responseJSON { response in
-                switch response.result {
-                case .success:
-                    do {
-                        if let statusCode = response.response?.statusCode {
-                            if statusCode == 200 {
-                                print("========== Success code: [\(statusCode)] - \(input.url)")
-                                guard let responseData = response.data else { return }
-                                let object = try JSONDecoder().decode(T.self, from: responseData)
-                                completion(object, nil)
+    func request<T: Decodable>(input: BaseRequest) -> Observable<T> {
+        return Observable.create { observer in
+            let request = self.alamoFireManager.request(input.url,
+                                                        method: input.requestType,
+                                                        parameters: input.parameters,
+                                                        encoding: input.encoding)
+                .validate(statusCode: 200 ..< 512)
+                .responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        do {
+                            if let statusCode = response.response?.statusCode {
+                                if statusCode == 200 {
+                                    print("========== Success code: [\(statusCode)] - \(input.url)")
+                                    guard let responseData = response.data else { return }
+                                    let object = try JSONDecoder().decode(T.self, from: responseData)
+                                    observer.onNext(object)
+                                    observer.onCompleted()
+                                } else {
+                                    print("========== Error code: [\(statusCode)] - \(input.url)")
+                                    observer.onError(BaseError.httpError(httpCode: statusCode))
+                                }
                             } else {
-                                print("========== Error code: [\(statusCode)] - \(input.url)")
-                                completion(nil, BaseError.httpError(httpCode: statusCode))
+                                observer.onError(BaseError.unexpectedError)
                             }
-                        } else {
-                            completion(nil, BaseError.unexpectedError)
+                        } catch {
+                            print("========== Error description: \(error.localizedDescription)")
+                            observer.onError(BaseError.apiFailure)
                         }
-                    } catch {
-                        print("========== Error description: \(error.localizedDescription)")
-                        completion(nil, BaseError.apiFailure)
+                    case .failure:
+                        observer.onError(BaseError.networkError)
                     }
-                case .failure:
-                    completion(nil, BaseError.networkError)
                 }
+
+            return Disposables.create {
+                request.cancel()
             }
+        }
     }
 }

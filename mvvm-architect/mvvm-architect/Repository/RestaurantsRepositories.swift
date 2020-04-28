@@ -7,7 +7,7 @@
 //
 
 protocol RestaurantsRepository {
-    func fetchRestaurants() -> Observable<[Restaurants]>
+    func fetchRestaurants() -> Observable<ListRestaurants>
     func fetchRestaurantDetail(resId: String) -> Observable<RestaurantDetail>
 }
 
@@ -18,41 +18,13 @@ final class RestaurantsRepositoryImpl: RestaurantsRepository {
         self.api = api
     }
 
-    func fetchRestaurants() -> Observable<[Restaurants]> {
-        return Observable.create { observer in
-            let input = FetchRestaurantsRequest(count: 10)
-            let request = self.api?.request(input: input) { (object: ListRestaurants?, error) in
-                if let object = object {
-                    guard let restaurants = object.restaurants else { return }
-                    observer.onNext(restaurants)
-                    observer.onCompleted()
-                } else if let error = error {
-                    observer.onError(error)
-                }
-            }
-
-            return Disposables.create {
-                request?.cancel()
-            }
-        }
+    func fetchRestaurants() -> Observable<ListRestaurants> {
+        let input = FetchRestaurantsRequest(count: 10)
+        return api?.request(input: input) ?? Observable.empty()
     }
 
     func fetchRestaurantDetail(resId: String) -> Observable<RestaurantDetail> {
-        return Observable.create { observer in
-            let input = FetchResDetailRequest(resId: resId)
-            let request = self.api?.request(input: input) { (object: RestaurantDetail?, error) in
-                if let restaurant = object {
-//                    guard let restaurant = object else { return }
-                    observer.onNext(restaurant)
-                    observer.onCompleted()
-                } else if let error = error {
-                    observer.onError(error)
-                }
-            }
-
-            return Disposables.create {
-                request?.cancel()
-            }
-        }
+        let input = FetchResDetailRequest(resId: resId)
+        return api?.request(input: input) ?? Observable.empty()
     }
 }

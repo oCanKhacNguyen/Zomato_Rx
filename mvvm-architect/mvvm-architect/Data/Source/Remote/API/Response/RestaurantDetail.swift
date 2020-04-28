@@ -37,7 +37,7 @@ struct RestaurantDetail: Codable {
     let hasOnlineDelivery: Int?
     let isDeliveringNow: Int?
     let storeType: String?
-    let includeBogoOffers: Bool?
+    let includeBogoOffers: Bool
     let deeplink: String?
     let isTableReservationSupported: Int?
     let hasTableBooking: Int?
