@@ -12,10 +12,12 @@ protocol RestaurantsRepository {
 }
 
 final class RestaurantsRepositoryImpl: RestaurantsRepository {
-    private var api: APIService?
+    private var api: APIService!
 
-    required init(api: APIService = APIService.shared) {
-        self.api = api
+    required init() {
+        let container = Container()
+        container.register(APIService.self) { _ in APIServiceImpl() }
+        api = container.resolve(APIService.self)
     }
 
     func fetchRestaurants() -> Observable<ListRestaurants> {

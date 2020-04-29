@@ -11,3 +11,4 @@
 @import Reusable;
 @import RxSwift;
 @import RxCocoa;
+@import Swinject;

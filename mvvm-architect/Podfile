@@ -16,6 +16,7 @@ def pods
 
 	# Resources
 	pod 'R.swift'
+  pod 'Swinject'
 	
 	# Map
 	pod 'GoogleMaps'

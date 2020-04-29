@@ -8,9 +8,11 @@
 
 import Alamofire
 
-final class APIService {
-    static let shared = APIService()
+protocol APIService {
+    func request<T: Decodable>(input: BaseRequest) -> Observable<T>
+}
 
+final class APIServiceImpl: APIService {
     private var alamoFireManager = Session.default
 
     init() {
