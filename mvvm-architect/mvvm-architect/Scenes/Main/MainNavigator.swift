@@ -7,7 +7,7 @@
 //
 
 protocol MainNavigatable {
-    func navigateToDetailScreen(with resId: String, api: RestaurantsRepositoryImpl)
+    func navigateToDetailScreen(with resId: String, api: RestaurantsRepository)
 }
 
 final class MainNavigator: MainNavigatable {
@@ -17,7 +17,7 @@ final class MainNavigator: MainNavigatable {
         self.navigationController = navigationController
     }
 
-    func navigateToDetailScreen(with resId: String, api: RestaurantsRepositoryImpl) {
+    func navigateToDetailScreen(with resId: String, api: RestaurantsRepository) {
         let restaurantDetailVM = DetailViewModel(dependencies: DetailViewModel.Dependencies(id: resId,
                                                                                             api: api))
         guard let vc = R.storyboard.main.detailViewController() else { return }

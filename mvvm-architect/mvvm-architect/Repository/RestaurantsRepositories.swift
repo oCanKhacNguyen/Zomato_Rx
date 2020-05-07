@@ -7,26 +7,24 @@
 //
 
 protocol RestaurantsRepository {
-    func fetchRestaurants() -> Observable<ListRestaurants>
-    func fetchRestaurantDetail(resId: String) -> Observable<RestaurantDetail>
+    func fetchRestaurants(_ count: Int) -> Single<ListRestaurants>
+    func fetchRestaurantDetail(with resId: String) -> Single<RestaurantDetail>
 }
 
 final class RestaurantsRepositoryImpl: RestaurantsRepository {
-    private var api: APIService!
+    private let api: APIService
 
-    required init() {
-        let container = Container()
-        container.register(APIService.self) { _ in APIServiceImpl() }
-        api = container.resolve(APIService.self)
+    required init(_ api: APIService) {
+        self.api = api
     }
 
-    func fetchRestaurants() -> Observable<ListRestaurants> {
-        let input = FetchRestaurantsRequest(count: 10)
-        return api?.request(input: input) ?? Observable.empty()
+    func fetchRestaurants(_ count: Int) -> Single<ListRestaurants> {
+        let router = APIRouter.search(count: count)
+        return api.request(router: router)
     }
 
-    func fetchRestaurantDetail(resId: String) -> Observable<RestaurantDetail> {
-        let input = FetchResDetailRequest(resId: resId)
-        return api?.request(input: input) ?? Observable.empty()
+    func fetchRestaurantDetail(with resId: String) -> Single<RestaurantDetail> {
+        let router = APIRouter.fetchResDetail(resId: resId)
+        return api.request(router: router)
     }
 }

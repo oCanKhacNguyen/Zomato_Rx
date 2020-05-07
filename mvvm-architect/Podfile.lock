@@ -23,7 +23,9 @@ PODS:
   - RxSwift (5.1.1)
   - SwiftFormat/CLI (0.44.7)
   - SwiftLint (0.39.2)
-  - Swinject (2.7.1)
+  - Swinject (2.6.2)
+  - SwinjectStoryboard (2.2.0):
+    - Swinject (~> 2.6)
 
 DEPENDENCIES:
   - Alamofire
@@ -35,7 +37,8 @@ DEPENDENCIES:
   - RxSwift
   - SwiftFormat/CLI
   - SwiftLint
-  - Swinject
+  - Swinject (~> 2.6.2)
+  - SwinjectStoryboard
 
 SPEC REPOS:
   trunk:
@@ -51,6 +54,7 @@ SPEC REPOS:
     - SwiftFormat
     - SwiftLint
     - Swinject
+    - SwinjectStoryboard
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
@@ -64,8 +68,9 @@ SPEC CHECKSUMS:
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SwiftFormat: fd97e27b8de5a46c9d1988bf1db1dc92e79f86a3
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
-  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+  Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
+  SwinjectStoryboard: 32512ef16c2b0ff5b8f823b23539c4a50f6d3383
 
-PODFILE CHECKSUM: d9f7fd70fd75f4d035f97c26832492540cd75a56
+PODFILE CHECKSUM: 07e0cc1709300234f0e2b3b6d3619f85617bf4c0
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.8.1

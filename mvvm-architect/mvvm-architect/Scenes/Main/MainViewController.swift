@@ -18,6 +18,8 @@ final class MainViewController: UIViewController {
     }
 
     private var disposeBag = DisposeBag()
+    var api: RestaurantsRepository?
+    var count: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +28,13 @@ final class MainViewController: UIViewController {
     }
 
     private func config() {
-        guard let mainNavigation = navigationController else { return }
+        guard let mainNavigation = navigationController,
+            let api = api,
+            let count = count else { return }
+
         let mainNavigator = MainNavigator(mainNavigation)
-        viewModel = MainViewModel(dependencies: MainViewModel.Dependencies(api: RestaurantsRepositoryImpl(),
+        viewModel = MainViewModel(dependencies: MainViewModel.Dependencies(api: api,
+                                                                           count: count,
                                                                            navigator: mainNavigator))
 
         // TableView's settings
@@ -59,7 +65,7 @@ final class MainViewController: UIViewController {
         output.error
             .drive(onNext: { [weak self] error in
                 guard let self = self,
-                    let error = error as? BaseError else { return }
+                    let error = error as? APIError else { return }
                 self.showAlert(message: error.errorMessage ?? "")
             })
             .disposed(by: disposeBag)

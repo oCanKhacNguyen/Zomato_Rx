@@ -37,7 +37,7 @@ final class DetailViewController: UIViewController {
         output.error
             .drive(onNext: { [weak self] error in
                 guard let self = self,
-                    let error = error as? BaseError else { return }
+                    let error = error as? APIError else { return }
                 self.showAlert(message: error.errorMessage ?? "")
             })
             .disposed(by: disposeBag)

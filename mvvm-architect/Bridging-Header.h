@@ -12,3 +12,4 @@
 @import RxSwift;
 @import RxCocoa;
 @import Swinject;
+@import SwinjectStoryboard;

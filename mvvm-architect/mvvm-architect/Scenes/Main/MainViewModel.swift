@@ -20,7 +20,8 @@ final class MainViewModel: ViewModelType {
     }
 
     struct Dependencies {
-        let api: RestaurantsRepositoryImpl
+        let api: RestaurantsRepository
+        let count: Int
         let navigator: MainNavigatable
     }
 
@@ -38,7 +39,7 @@ final class MainViewModel: ViewModelType {
         let results = input.ready
             .asObservable()
             .flatMapLatest { _ in
-                self.dependencies.api.fetchRestaurants()
+                self.dependencies.api.fetchRestaurants(self.dependencies.count)
                     .trackActivity(activityIndicator)
                     .trackError(errorTracker)
             }
