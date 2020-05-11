@@ -28,7 +28,7 @@ final class DetailViewController: UIViewController {
 
         output.data
             .drive(onNext: { [weak self] data in
-                guard let address = data?.location?.address,
+                guard let address = data.location?.address,
                     let self = self else { return }
                 self.addressLabel.text = address
             })

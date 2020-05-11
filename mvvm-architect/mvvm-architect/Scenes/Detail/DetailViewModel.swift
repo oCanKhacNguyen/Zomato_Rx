@@ -13,7 +13,7 @@ final class DetailViewModel: ViewModelType {
 
     struct Output {
         let loading: Driver<Bool>
-        let data: Driver<RestaurantDetail?>
+        let data: Driver<RestaurantDetail>
         let error: Driver<Error>
     }
 
@@ -40,7 +40,7 @@ final class DetailViewModel: ViewModelType {
                     .trackActivity(activityIndicator)
                     .trackError(errorTracker)
             }
-            .map { restaurant -> RestaurantDetail? in
+            .map { restaurant -> RestaurantDetail in
                 restaurant
             }
             .asDriverOnErrorJustComplete()

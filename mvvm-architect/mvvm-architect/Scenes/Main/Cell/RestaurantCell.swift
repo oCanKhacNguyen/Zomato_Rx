@@ -6,7 +6,7 @@
 //  Copyright © 2020 sun. All rights reserved.
 //
 
-final class RestaurantCell: UITableViewCell, NibReusable {
+final class RestaurantCell: UITableViewCell {
     @IBOutlet private var titleLabel: UILabel!
 
     func configCell(_ res: Restaurant) {

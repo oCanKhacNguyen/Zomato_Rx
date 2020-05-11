@@ -5,7 +5,6 @@ def pods
 	# Core
 	pod 'RxSwift'
   pod 'RxCocoa'
-	pod 'Reusable'
 
 	# Networking
 	pod 'Alamofire'

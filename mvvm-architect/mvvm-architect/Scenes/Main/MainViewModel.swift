@@ -9,12 +9,13 @@
 final class MainViewModel: ViewModelType {
     struct Input {
         let ready: Driver<Void>
-        let selected: Driver<Int>
+        let refreshing: Driver<Void>
+        let selected: Driver<IndexPath>
     }
 
     struct Output {
         let loading: Driver<Bool>
-        let results: Driver<ListRestaurants?>
+        let results: Driver<[Restaurants]>
         let selected: Driver<Void>
         let error: Driver<Error>
     }
@@ -31,20 +32,20 @@ final class MainViewModel: ViewModelType {
         self.dependencies = dependencies
     }
 
-    func transform(input: MainViewModel.Input) -> MainViewModel.Output {
+    func transform(input: Input) -> Output {
         let activityIndicator = ActivityIndicator()
         let loading = activityIndicator.asDriver()
         let errorTracker = ErrorTracker()
 
-        let results = input.ready
-            .asObservable()
+        let results = Observable.of(input.ready, input.refreshing)
+            .merge()
             .flatMapLatest { _ in
                 self.dependencies.api.fetchRestaurants(self.dependencies.count)
                     .trackActivity(activityIndicator)
                     .trackError(errorTracker)
             }
-            .map { listRestaurants -> ListRestaurants? in
-                listRestaurants
+            .map { listRestaurants -> [Restaurants] in
+                listRestaurants.restaurants ?? []
             }
             .asDriverOnErrorJustComplete()
 
@@ -53,9 +54,9 @@ final class MainViewModel: ViewModelType {
         let selected = input.selected
             .asObservable()
             .withLatestFrom(results) { ($0, $1) }
-            .do(onNext: { [weak self] (index: Int, listRestaurants: ListRestaurants?) in
+            .do(onNext: { [weak self] (indexPath: IndexPath, restaurants: [Restaurants]) in
                 guard let self = self,
-                    let resId = listRestaurants?.restaurants?[index].restaurant?.id else { return }
+                    let resId = restaurants[indexPath.row].restaurant?.id else { return }
                 self.dependencies.navigator.navigateToDetailScreen(with: resId, api: self.dependencies.api)
             })
             .mapToVoid()

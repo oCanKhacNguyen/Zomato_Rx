@@ -52,7 +52,9 @@
 		8E3F231F24625D5100ED3155 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F231E24625D5100ED3155 /* Reachability.swift */; };
 		8E3F23212462608400ED3155 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F23202462608400ED3155 /* APIRouter.swift */; };
 		8E3F23232462654000ED3155 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F23222462654000ED3155 /* Constants.swift */; };
+		8E3F23262463FFB600ED3155 /* UIRefreshControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F23252463FFB600ED3155 /* UIRefreshControl+Rx.swift */; };
 		8E50546C24600955004DCCFC /* SwinjectStoryboard+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E50546B24600955004DCCFC /* SwinjectStoryboard+Setup.swift */; };
+		8E80C2742469496400B5E732 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E80C2732469496400B5E732 /* UITableView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,7 +108,9 @@
 		8E3F231E24625D5100ED3155 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		8E3F23202462608400ED3155 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		8E3F23222462654000ED3155 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8E3F23252463FFB600ED3155 /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
 		8E50546B24600955004DCCFC /* SwinjectStoryboard+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwinjectStoryboard+Setup.swift"; sourceTree = "<group>"; };
+		8E80C2732469496400B5E732 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +271,7 @@
 			children = (
 				8E3F23242463DEDF00ED3155 /* RxExtension */,
 				04E72C5E244ED5ED00F64558 /* UIViewController+Extension.swift */,
+				8E80C2732469496400B5E732 /* UITableView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				04E72C5C244ECCAB00F64558 /* UIViewController+Rx.swift */,
 				04096FB7244EA96C003E167F /* ErrorTracker.swift */,
 				04096FB5244DF1A5003E167F /* ActivityIndicator.swift */,
+				8E3F23252463FFB600ED3155 /* UIRefreshControl+Rx.swift */,
 			);
 			path = RxExtension;
 			sourceTree = "<group>";
@@ -567,6 +573,7 @@
 			files = (
 				045905ED244FF068007B64DA /* Reviews.swift in Sources */,
 				8E3F23212462608400ED3155 /* APIRouter.swift in Sources */,
+				8E80C2742469496400B5E732 /* UITableView+Extension.swift in Sources */,
 				045905C3244FE598007B64DA /* RestaurantsRepositories.swift in Sources */,
 				04955BDF244D94D70009FD2E /* APIService.swift in Sources */,
 				04CEA6AF24459B8700F10935 /* MainViewController.swift in Sources */,
@@ -604,6 +611,7 @@
 				04E72C5D244ECCAB00F64558 /* UIViewController+Rx.swift in Sources */,
 				045905FA2450137E007B64DA /* RestaurantDetail.swift in Sources */,
 				04096FB4244DEDD5003E167F /* ViewModelType.swift in Sources */,
+				8E3F23262463FFB600ED3155 /* UIRefreshControl+Rx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
