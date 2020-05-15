@@ -7,8 +7,9 @@
 //
 
 protocol RestaurantsRepository {
-    func fetchRestaurants(_ count: Int) -> Single<ListRestaurants>
-    func fetchRestaurantDetail(with resId: String) -> Single<RestaurantDetail>
+    func fetchRestaurants() -> Observable<PagingInfo<ListRestaurants>>
+    func fetchRestaurants(start: Int, count: Int) -> Observable<PagingInfo<ListRestaurants>>
+    func fetchRestaurantDetail(with resId: String) -> Observable<RestaurantDetail>
 }
 
 final class RestaurantsRepositoryImpl: RestaurantsRepository {
@@ -18,13 +19,18 @@ final class RestaurantsRepositoryImpl: RestaurantsRepository {
         self.api = api
     }
 
-    func fetchRestaurants(_ count: Int) -> Single<ListRestaurants> {
-        let router = APIRouter.search(count: count)
+    func fetchRestaurants() -> Observable<PagingInfo<ListRestaurants>> {
+        let router = APIRouter.search(start: 0)
+        return api.request(router: router).asObservable()
+    }
+
+    func fetchRestaurants(start: Int, count _: Int) -> Observable<PagingInfo<ListRestaurants>> {
+        let router = APIRouter.search(start: start)
         return api.request(router: router)
     }
 
-    func fetchRestaurantDetail(with resId: String) -> Single<RestaurantDetail> {
+    func fetchRestaurantDetail(with resId: String) -> Observable<RestaurantDetail> {
         let router = APIRouter.fetchResDetail(resId: resId)
-        return api.request(router: router)
+        return api.request(router: router).asObservable()
     }
 }

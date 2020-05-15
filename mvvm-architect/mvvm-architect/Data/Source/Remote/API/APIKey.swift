@@ -7,6 +7,6 @@
 //
 
 enum APIKey {
-    static var apiKey = ""
-    static var googleApiKey = ""
+    static var apiKey = "9b327362c174cc84a0301bf06bd73831"
+    static var googleApiKey = "AIzaSyDSMsxBNsbvTDya-VycBhr-iyHTWPw9l1A"
 }

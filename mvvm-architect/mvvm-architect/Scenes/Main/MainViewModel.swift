@@ -11,6 +11,7 @@ final class MainViewModel: ViewModelType {
         let ready: Driver<Void>
         let refreshing: Driver<Void>
         let selected: Driver<IndexPath>
+        let loadMoreTrigger: Driver<Void>
     }
 
     struct Output {
@@ -36,18 +37,12 @@ final class MainViewModel: ViewModelType {
         let activityIndicator = ActivityIndicator()
         let loading = activityIndicator.asDriver()
         let errorTracker = ErrorTracker()
-
-        let results = Observable.of(input.ready, input.refreshing)
-            .merge()
-            .flatMapLatest { _ in
-                self.dependencies.api.fetchRestaurants(self.dependencies.count)
-                    .trackActivity(activityIndicator)
-                    .trackError(errorTracker)
-            }
-            .map { listRestaurants -> [Restaurants] in
-                listRestaurants.restaurants ?? []
-            }
-            .asDriverOnErrorJustComplete()
+        let pageInfo = setUpLoadMorePaging(loadTrigger: input.ready,
+                                           getItems: dependencies.api.fetchRestaurants,
+                                           refreshTrigger: input.refreshing,
+                                           refreshItems: dependencies.api.fetchRestaurants,
+                                           loadMoreTrigger: input.loadMoreTrigger,
+                                           loadMoreItems: dependencies.api.fetchRestaurants)
 
         let errors = errorTracker.asDriver()
 

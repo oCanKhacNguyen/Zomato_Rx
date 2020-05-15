@@ -45,7 +45,8 @@ final class MainViewController: UIViewController {
     private func bindViewModel() {
         let input = MainViewModel.Input(ready: rx.viewWillAppear.asDriver(),
                                         refreshing: refreshControl.rx.controlEvent(.valueChanged).asDriver(),
-                                        selected: restaurantsTableView.rx.itemSelected.asDriver())
+                                        selected: restaurantsTableView.rx.itemSelected.asDriver(),
+                                        loadMoreTrigger: Driver.just(()))
         let output = viewModel.transform(input: input)
 
         output.loading
